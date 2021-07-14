@@ -1,4 +1,4 @@
-const Cesium = require('cesium/Cesium')
+import 'Cesium'
 /**
  * @function 格式化位置信息
  * @export formatPositionTool
@@ -77,45 +77,6 @@ export function getModelColorByCamp(camp) {
 }
 
 // 获取3D模型url
-/*export function getThreeDModelByType(type) {
-  switch (type) {
-    case 111008: // 舰艇 // 护卫舰
-      return require('../models/Quzhujian/quzhujian.glb')
-    case 111006: // 船  // 哨舰
-      return require('../models/Quzhujian/quzhujian.glb')
-    case 111009: // 驱逐舰
-      return require('../models/Quzhujian/quzhujian.glb')
-    case 111007: // 航母
-      return require('../models/Carrier1/carrier.glb')
-    case 112001: // 潜艇
-      return require('../models/Submarine/submarine.glb')
-    case 112002: // 鱼雷
-      return require('../models/YL/YL.glb')
-    case 114001: // 战斗机
-      return require('../models/Fighter/fighter.glb')
-    case 114002: // 导弹
-      return require('../models/Missile/missile.glb')
-    case 113001: // 直18F
-      return require('../models/Copter/copter.glb')
-    case 116001: // 坦克
-      return require('../models/Tank/tank.glb')
-    case 116040: // 雷达
-      return require('../models/Radar/radar.glb')
-    case 117001: // 车
-      return require('../models/GroundVehicle/car.glb')
-    case 117002: // 雷达车
-      return require('../models/RadarTruck/radar1.glb')
-    case 117003: // 发射车
-      return require('../models/LaunchTruck/launchTruck.glb')
-    case 118001: // 基站
-      return require('../models/Station/Station.glb')
-    case 118002: // 建筑
-      return require('../models/Building/Building.glb')
-    default:
-      return null
-  }
-}*/
-
 export function getThreeDModelByType(type) {
   switch (type) {
     case 111008: // 舰艇 // 护卫舰

@@ -8,9 +8,9 @@ export default {
   data() {
     return {
       mapUrl: `${this.$mapUrl}/map/`, // 地图资源
-      // baseUrl: this.$baseUrl,
+      baseUrl: this.$baseUrl, // 后台地址
       viewer: null,
-      // websocketUrl: this.$websocketUrl, // websocketUrl
+      websocketUrl: this.$websocketUrl, // websocketUrl
     }
   },
   methods: {
@@ -40,7 +40,7 @@ export default {
       // FPS 帧率显示
       this.viewer.scene.debugShowFramesPerSecond = true
       // cesiumCanvas id 设置
-      viewer.scene.canvas.id = 'cesiumCanvas'
+      this.viewer.scene.canvas.id = 'cesiumCanvas'
       this.flytochina()
       // 指北针插件
       // this.initNavigation()
@@ -180,8 +180,8 @@ export default {
 #cesiumContainer {
   width: 100%;
   height: 100%;
-  /* padding: 0;
-  margin: 0; */
+  padding: 0;
+  margin: 0;
   overflow: hidden;
 }
 </style>

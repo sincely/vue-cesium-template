@@ -4,7 +4,9 @@ import router from './router'
 import store from './store'
 import axiosOrigin from 'axios'
 import 'cesium/Widgets/widgets.css'
+import dataV from '@jiaminghi/data-view'
 
+Vue.use(dataV) // 将自动注册所有组件为全局组件
 Vue.config.productionTip = false
 
 function getServerConfig() {
@@ -13,6 +15,7 @@ function getServerConfig() {
       .get('./serverConfig.json')
       .then((result) => {
         let config = result.data
+        console.log(config)
         for (let key in config) {
           Vue.prototype[`$${key}`] = config[key]
         }

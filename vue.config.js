@@ -4,9 +4,8 @@ const path = require('path')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
-
-const name = 'vue cesium'
-const port = process.env.port || process.env.npm_config_port || 9527 // dev port
+const name = 'vue cesium project'
+// const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 module.exports = {
   publicPath: '/',
   outputDir: 'dist',
@@ -14,7 +13,6 @@ module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   devServer: {
-    port: port,
     open: true,
     overlay: {
       warnings: false,
@@ -26,6 +24,7 @@ module.exports = {
     // it can be accessed in index.html to inject the correct title.
     name: name,
     resolve: {
+      extensions: ['.js', '.vue', '.json'],
       alias: {
         '@': resolve('src'),
       },

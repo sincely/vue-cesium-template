@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <viewer></viewer>
+    <viewer id="cesiumContainer"></viewer>
   </div>
 </template>
 
@@ -15,15 +15,10 @@ export default {
 </script>
 
 <style lang="less">
-/* .rengu-logo-container {
-  position: absolute;
-  bottom: 4px;
-  left: 10px;
-  width: 40px;
-  height: 40px;
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
-.rengu-logo-container img {
-  width: 40px;
-  height: 40px;
-} */
 </style>

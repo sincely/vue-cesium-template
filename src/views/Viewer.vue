@@ -1,10 +1,8 @@
 <template>
-  <div class="map-box">
-    <div id="cesiumContainer"></div>
-  </div>
+  <div id="cesiumContainer"></div>
 </template>
-
 <script>
+// 指北针插件
 export default {
   name: '',
   data() {
@@ -15,54 +13,175 @@ export default {
       // websocketUrl: this.$websocketUrl, // websocketUrl
     }
   },
-  mounted() {
-    console.log(this.mapUrl)
-    console.log(Cesium)
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-      geocoder: true, //一种地理位置搜索工具，用于显示相机访问的地理位置。默认使用微软的Bing地图。
-      homeButton: true, //首页位置，点击之后将视图跳转到默认视角。
-      sceneModePicker: true, //切换2D、3D 和 Columbus View (CV) 模式。
-      baseLayerPicker: true, //选择三维数字地球的底图（imagery and terrain）。
-      navigationHelpButton: true, //帮助提示，如何操作数字地球。
-      animation: true, //控制视窗动画的播放速度。
-      creditsDisplay: false, //展示商标版权和数据源。
-      timeline: true, //展示当前时间和允许用户在进度条上拖动到任何一个指定的时间。
-      fullscreenButton: true, //视察全屏按钮
-      //图像图层提供者，仅baseLayerPicker设为false有意义
-      imageryProvider: new Cesium.TileMapServiceImageryProvider({
-        credit: '',
-        url: this.mapUrl,
-      }), //图像图层提供者，仅baseLayerPicker设为false有意义
-    })
-    viewer._cesiumWidget._creditContainer.style.display = 'none' // 隐藏版权
+  methods: {
+    // 初始化
+    init() {
+      this.viewer = new Cesium.Viewer('cesiumContainer', {
+        geocoder: true, // 一种地理位置搜索工具，用于显示相机访问的地理位置。默认使用微软的Bing地图。
+        homeButton: true, // 首页位置，点击之后将视图跳转到默认视角。
+        sceneModePicker: false, // 切换2D、3D 和 Columbus View (CV) 模式。
+        baseLayerPicker: false, // 选择三维数字地球的底图（imagery and terrain）。
+        navigationHelpButton: true, // 帮助提示，如何操作数字地球。
+        animation: true, // 控制视窗动画的播放速度。
+        creditsDisplay: false, // 展示商标版权和数据源。
+        timeline: true, // 展示当前时间和允许用户在进度条上拖动到任何一个指定的时间。
+        fullscreenButton: true, // 视察全屏按钮
+        // 图像图层提供者，仅baseLayerPicker设为false有意义
+        imageryProvider: new Cesium.TileMapServiceImageryProvider({
+          credit: '',
+          url: this.mapUrl,
+        }),
+      })
+      this.viewer._cesiumWidget._creditContainer.style.display = 'none' // 隐藏版权
+      // 使用太阳作为光源，可以照亮地球。
+      this.viewer.scene.globe.enableLighting = false
+      // 关闭地面大气效果，（默认为开启状态）
+      this.viewer.scene.globe.showGroundAtmosphere = false
+      // FPS 帧率显示
+      this.viewer.scene.debugShowFramesPerSecond = true
+      // cesiumCanvas id 设置
+      viewer.scene.canvas.id = 'cesiumCanvas'
+      this.flytochina()
+      // 指北针插件
+      // this.initNavigation()
+      // 初始地图高清
+      // this.changeBaseMap('gg')
+    },
+    /**
+     *  将三维球定位到中国
+     *
+     * */
+    flytochina() {
+      this.viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(103.84, 31.15, 17850000),
+        orientation: {
+          heading: Cesium.Math.toRadians(348.4202942851978),
+          pitch: Cesium.Math.toRadians(-89.74026687972041),
+          roll: Cesium.Math.toRadians(0),
+        },
+        complete: function callback() {
+          // 定位完成之后的回调函数
+        },
+      })
+    },
+    /**
+     * 切换地图
+     */
+    changeBaseMap(type) {
+      this.viewer.imageryLayers.removeAll()
+      switch (type) {
+        //天地图
+        case 'tdt':
+          this.viewer.imageryLayers.addImageryProvider(
+            new WebMapTileServiceImageryProvider({
+              url: 'https://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=93d1fdef41f93d2211deed6d22780c48',
+              layer: 'tdtBasicLayer',
+              style: 'default',
+              format: 'image/jpeg',
+              tileMatrixSetID: 'GoogleMapsCompatible',
+              show: false,
+              maximumLevel: 16,
+            })
+          )
+          break
+        //天地图矢量
+        case 'tdtsl':
+          this.viewer.imageryLayers.addImageryProvider(
+            new WebMapTileServiceImageryProvider({
+              url: 'https://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=93d1fdef41f93d2211deed6d22780c48',
+              layer: 'tdtVecBasicLayer',
+              style: 'default',
+              format: 'image/jpeg',
+              tileMatrixSetID: 'GoogleMapsCompatible',
+              show: false,
+            })
+          )
+          break
+        //谷歌影像
+        case 'gg':
+          var url = 'https://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali'
+          this.viewer.imageryLayers.addImageryProvider(new UrlTemplateImageryProvider({ url: url }))
+          break
+        case 'arcgis':
+          viewer.imageryLayers.addImageryProvider(
+            new ArcGisMapServerImageryProvider({
+              url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+              enablePickFeatures: false,
+            })
+          )
+          break
+        //必应
+        case 'bing':
+          this.viewer.imageryLayers.addImageryProvider(
+            new BingMapsImageryProvider({
+              url: 'https://dev.virtualearth.net',
+              key: 'get-yours-at-https://www.bingmapsportal.com/',
+              mapStyle: BingMapsStyle.AERIAL,
+            })
+          )
+          break
+        case 'dark':
+          this.viewer.imageryLayers.addImageryProvider(
+            new createTileMapServiceImageryProvider({
+              url: 'https://cesiumjs.org/blackmarble',
+              credit: 'Black Marble imagery courtesy NASA Earth Observatory',
+              flipXY: true, // Only old gdal2tile.py generated tilesets need this flag.
+            })
+          )
+          break
+      }
 
-    // 将三维球定位到中国
-    viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(103.84, 31.15, 17850000),
-      orientation: {
-        heading: Cesium.Math.toRadians(348.4202942851978),
-        pitch: Cesium.Math.toRadians(-89.74026687972041),
-        roll: Cesium.Math.toRadians(0),
-      },
-      complete: function callback() {
-        // 定位完成之后的回调函数
-      },
-    })
+      //全球影像中文注记服务
+      this.viewer.imageryLayers.addImageryProvider(
+        new WebMapTileServiceImageryProvider({
+          url: 'https://t0.tianditu.com/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=93d1fdef41f93d2211deed6d22780c48',
+          layer: 'tdtAnnoLayer',
+          style: 'default',
+          format: 'image/jpeg',
+          tileMatrixSetID: 'GoogleMapsCompatible',
+          show: false,
+        })
+      )
+      //全球矢量中文标注服务
+      this.viewer.imageryLayers.addImageryProvider(
+        new WebMapTileServiceImageryProvider({
+          url: 'https://t0.tianditu.com/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=93d1fdef41f93d2211deed6d22780c48',
+          layer: 'tdtAnnoLayer',
+          style: 'default',
+          format: 'image/jpeg',
+          tileMatrixSetID: 'GoogleMapsCompatible',
+        })
+      )
+    },
+
+    initNavigation() {
+      let options = {}
+      // 用于在使用重置导航重置地图视图时设置默认视图控制。接受的值是Cesium.Cartographic 和 Cesium.Rectangle.
+      options.defaultResetView = Cesium.Rectangle.fromDegrees(80, 22, 130, 50)
+      // 用于启用或禁用罗盘。true是启用罗盘，false是禁用罗盘。默认值为true。如果将选项设置为false，则罗盘将不会添加到地图中。
+      options.enableCompass = true
+      // 用于启用或禁用缩放控件。true是启用，false是禁用。默认值为true。如果将选项设置为false，则缩放控件将不会添加到地图中。
+      options.enableZoomControls = true
+      // 用于启用或禁用距离图例。true是启用，false是禁用。默认值为true。如果将选项设置为false，距离图例将不会添加到地图中。
+      options.enableDistanceLegend = true
+      // 用于启用或禁用指南针外环。true是启用，false是禁用。默认值为true。如果将选项设置为false，则该环将可见但无效。
+      options.enableCompassOuterRing = true
+      CesiumNavigation(this.viewer, options)
+    },
+  },
+
+  mounted() {
+    console.log(Cesium)
+    this.init()
   },
 }
 </script>
-<style lang="less">
-.map-box {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-}
+<style>
 #cesiumContainer {
   width: 100%;
   height: 100%;
-  padding: 0;
-  margin: 0;
+  /* padding: 0;
+  margin: 0; */
   overflow: hidden;
 }
 </style>

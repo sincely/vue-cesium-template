@@ -14,8 +14,15 @@ import 'cesium/Widgets/widgets.css'
 import dataV from '@jiaminghi/data-view' // 科技风格边框
 import './global.less' // 全局样式
 
+import * as filters from './filters' // 全局过滤器
+
 Vue.use(dataV) // 将自动注册所有组件为全局组件
 Vue.config.productionTip = false
+
+// 注册全局过滤器
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key])
+})
 
 function getServerConfig() {
   return new Promise((resolve, reject) => {

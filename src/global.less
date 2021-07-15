@@ -19,3 +19,378 @@
   top: 170px;
   height: 90px;
 }
+
+.cesium-credit-logoContainer {
+  display: none !important;
+}
+
+.cesium-performanceDisplay-defaultContainer {
+  bottom: 0;
+  right: 40px !important;
+  top: auto !important;
+  .cesium-performanceDisplay {
+    background-color: transparent !important;
+    border: none !important;
+  }
+  .cesium-performanceDisplay-ms,
+  .cesium-performanceDisplay-fps {
+    display: inline-block !important;
+  }
+  .cesium-performanceDisplay-throttled {
+    display: none;
+  }
+  .cesium-performanceDisplay-ms {
+    margin-right: 6px;
+  }
+}
+
+.cesium-viewer-toolbar {
+  z-index: 10;
+}
+
+.menu-content {
+  width: 400px;
+  height: 700px;
+}
+
+.ant-popover {
+  top: 100px !important;
+  left: 75px !important;
+  .ant-popover-inner {
+    // background: rgba(42, 127, 219, 0.3);
+    background: rgba(0, 48, 64, 0.7);
+    border: 1px solid #73ffff;
+  }
+}
+
+.ant-popover-arrow {
+  display: none !important;
+  /*border-bottom-color: rgba(42, 127, 219, 0.4) !important;
+  border-left-color: rgba(42, 127, 219, 0.4) !important;*/
+}
+
+// 表格自定义样式
+.ant-table-thead {
+  th {
+    background: #314d7e !important;
+    color: #fff !important;
+  }
+}
+.ant-table-tbody {
+  tr:nth-child(2n + 1) {
+    td {
+      // background: rgba(54, 90, 123, 0.6);
+      background: rgba(19, 20, 60, 0.7);
+    }
+  }
+  tr:nth-child(2n) {
+    td {
+      background: rgba(104, 179, 255, 0.4) !important;
+    }
+  }
+  tr:hover {
+    td {
+      background: #2c3f80 !important;
+    }
+  }
+  tr.ant-table-row-selected {
+    td {
+      background: #1c4183 !important;
+      color: #fff !important;
+    }
+  }
+  td {
+    color: #fff;
+  }
+}
+.ant-table {
+  table,
+  th,
+  td {
+    border-color: #728ac7 !important;
+  }
+  .ant-table-tbody {
+    td {
+      font-size: 16px;
+      padding: 6px 16px;
+    }
+  }
+  th {
+    font-size: 16px;
+    padding: 6px 16px !important;
+  }
+  .ant-table-row-expand-icon {
+    background: transparent;
+  }
+}
+.ant-table-placeholder {
+  background: transparent;
+  border-color: #728ac7;
+  border-left-color: #728ac7 !important;
+  border-right-color: #728ac7 !important;
+  color: #ccc;
+}
+
+// 分页器自定义样式
+.ant-pagination.ant-table-pagination {
+  float: unset;
+  margin: 16px auto;
+  text-align: center;
+  color: #fff;
+  .ant-pagination-item-link {
+    background: #3a81c7;
+    border-color: #3a81c7;
+    color: #fff;
+  }
+}
+
+// antd modal自定义样式
+.ant-modal-content {
+  background-color: rgba(0, 48, 64, 0.7) !important;
+  border: 1px solid #73ffff;
+  .ant-modal-confirm-title,
+  .ant-modal-confirm-content {
+    color: #d4821c;
+  }
+}
+
+.dialog-drag {
+  background: transparent !important;
+  min-width: 400px;
+  .dialog-header {
+    background: rgba(102, 143, 226, 0.7) !important;
+  }
+  .dialog-body {
+    background: rgba(0, 48, 64, 0.7) !important;
+    color: #fff !important;
+  }
+}
+
+.distance-legend {
+  left: 30px;
+  bottom: 10px;
+}
+
+// 模型右键菜单
+.v-context {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border-radius: 0.5rem !important;
+  padding: 10px !important;
+
+  .node-name {
+    color: #73ffff;
+    font-weight: 700;
+    line-height: 24px;
+    font-size: 16px;
+  }
+  .node-text {
+    cursor: pointer;
+    color: #adc8e6;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    &:hover {
+      background-color: #3d67a7f5;
+    }
+  }
+}
+
+// element 自定义样式
+.el-dialog__wrapper {
+  background: rgba(0, 0, 0, 0.5);
+  .el-dialog {
+    background: url('assets/dialogBack.png') center center no-repeat;
+    background-size: 100% 100%;
+    padding: 40px;
+    .el-dialog__header {
+      background: rgba(102, 143, 226, 0.7) !important;
+      color: #fff !important;
+      padding: 3px 24px 3px 10px;
+      .el-dialog__title {
+        color: #fff !important;
+        font-size: 18px;
+        font-weight: 500;
+      }
+      .el-dialog__headerbtn {
+        top: 44px !important;
+        right: 48px !important;
+        .el-dialog__close {
+          font-weight: 700;
+          color: #fff !important;
+        }
+      }
+    }
+
+    .el-dialog__body {
+      color: #fff !important;
+      padding: 10px !important;
+      min-width: 200px;
+      background-color: rgba(45, 94, 103, 0.9) !important;
+      .ant-checkbox-wrapper {
+        color: #fff;
+      }
+    }
+  }
+
+  &.drag-dialog {
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    overflow: visible !important;
+    height: 0 !important;
+    .el-dialog {
+      background-color: rgba(0, 48, 64, 0.7) !important;
+      background-image: none !important;
+      width: auto;
+      padding: 0;
+      min-width: 300px;
+
+      .el-dialog__header {
+        .el-dialog__headerbtn {
+          top: 3px !important;
+          right: 6px !important;
+        }
+      }
+    }
+  }
+}
+
+.sized-dialog {
+  .el-dialog {
+    box-shadow: none;
+    .el-dialog__body {
+      min-height: 600px;
+    }
+  }
+}
+
+/*ant-drawer 样式自定义*/
+.ant-drawer.ant-drawer-right.ant-drawer-open {
+  width: 0;
+}
+
+.ant-drawer-content {
+  // background: rgba(54, 98, 113, 0.7);
+  background: rgba(114, 129, 134, 0.7);
+  .ant-drawer-header {
+    background: rgba(2, 170, 194, 0.9);
+    .ant-drawer-title {
+      color: #d7f6fb;
+      font-weight: 700;
+    }
+    .ant-drawer-close {
+      color: #fff !important;
+    }
+  }
+}
+
+.ant-drawer-mask {
+  background-color: transparent;
+}
+
+/*ant-collapse 样式自定义*/
+.ant-collapse {
+  // background-color: rgba(90, 111, 152, 0.7);
+  background-color: rgba(0, 48, 64, 0.4);
+  border-color: rgb(115, 255, 255) !important;
+
+  .ant-collapse-header {
+    color: #d7f6fb !important;
+    font-weight: 700;
+  }
+
+  .ant-collapse-content {
+    // background-color: rgba(0, 48, 64, 0.7);
+    background-color: rgba(86, 92, 95, 0.7);
+  }
+
+  .ant-collapse-item {
+    border-bottom-color: rgb(115, 255, 255);
+  }
+}
+
+.ant-form-item-label {
+  label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ced4ea !important;
+  }
+}
+.ant-input,
+.ant-select-selection {
+  // background-color: #253a7e;
+  background-color: rgba(0, 48, 64, 0.3);
+  border-color: #a6aec1;
+  caret-color: #fff;
+  color: #fff;
+}
+.ant-select-dropdown {
+  position: relative;
+  z-index: 10001;
+}
+
+.ant-calendar-picker-container {
+  z-index: 10001;
+}
+.ant-calendar-picker {
+  // width: 240px !important;
+  width: 100%;
+}
+.ant-input-number {
+  // background-color: #253a7e;
+  background-color: rgba(0, 48, 64, 0.3);
+  border-color: #a6aec1;
+  // width: 240px;
+  width: 100%;
+  color: #fff;
+}
+.ant-input-number-handler-wrap {
+  background: #1c5ea3;
+}
+
+.ant-form-item,
+.el-dialog {
+  i {
+    color: #fff !important;
+  }
+}
+
+.ant-table {
+  &::after {
+    background: transparent;
+  }
+}
+
+.ant-notification-notice {
+  background: rgba(0, 48, 64, 0.8);
+  border: 1px solid rgb(115, 255, 255);
+  .ant-notification-notice-message {
+    color: #fff;
+  }
+  .ant-notification-notice-description {
+    color: #aaa;
+  }
+}
+
+/*自定义滚动条样式*/
+div::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 10px;
+}
+
+div::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #ccc;
+}
+
+div::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  // background: #73858a;
+  background: transparent;
+}

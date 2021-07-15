@@ -1,3 +1,6 @@
+const Cesium = import('cesium/Cesium')
+// 等同 import * as Cesium from 'cesium/Cesium.js'
+
 /**
  * @function 格式化位置信息
  * @export formatPositionTool

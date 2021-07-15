@@ -5,7 +5,7 @@
 </template>
 <script>
 import CesiumNavigation from '../plugins/cesium-navigation-es6' // 指南针插件
-import * as Cesium from 'cesium/Cesium'
+import * as Cesium from 'cesium/Cesium.js'
 import * as widgets from 'cesium/Widgets/widgets.css'
 
 let viewer
@@ -51,7 +51,7 @@ export default {
       // 指北针插件
       this.initNavigation()
       // 初始地图高清
-      // this.changeBaseMap('gg')
+      // this.changeBaseMap('tdtsl')
     },
     /**
      *  将三维球定位到中国

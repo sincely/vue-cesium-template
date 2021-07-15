@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import CesiumNavigation from '../plugins/cesium-navigation-es6' // 指南针插件
+import CesiumNavigation from '@/plugins/cesium-navigation-es6' // 指南针插件
 import * as Cesium from 'cesium/Cesium'
 import * as widgets from 'cesium/Widgets/widgets.css'
 

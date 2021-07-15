@@ -1,4 +1,3 @@
-import 'Cesium'
 /**
  * @function 格式化位置信息
  * @export formatPositionTool

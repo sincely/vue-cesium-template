@@ -1,30 +1,33 @@
 <template>
-  <div id="cesiumContainer"></div>
+  <div class="map-box">
+    <div id="cesiumContainer"></div>
+  </div>
 </template>
 <script>
 // 指北针插件
+let viewer
 export default {
   name: '',
   data() {
     return {
       mapUrl: `${this.$mapUrl}/map/`, // 地图资源
       baseUrl: this.$baseUrl, // 后台地址
-      viewer: null,
+      // viewer: null,
       websocketUrl: this.$websocketUrl, // websocketUrl
     }
   },
   methods: {
     // 初始化
     init() {
-      this.viewer = new Cesium.Viewer('cesiumContainer', {
+      viewer = new Cesium.Viewer('cesiumContainer', {
         geocoder: true, // 一种地理位置搜索工具，用于显示相机访问的地理位置。默认使用微软的Bing地图。
         homeButton: true, // 首页位置，点击之后将视图跳转到默认视角。
         sceneModePicker: false, // 切换2D、3D 和 Columbus View (CV) 模式。
-        baseLayerPicker: false, // 选择三维数字地球的底图（imagery and terrain）。
+        baseLayerPicker: false, // s是否显示底图切换控件，默认 true
         navigationHelpButton: true, // 帮助提示，如何操作数字地球。
-        animation: true, // 控制视窗动画的播放速度。
+        animation: false, // 是否显示动画效果控件，默认 true ；设置 false，动画效果控件不可见。
         creditsDisplay: false, // 展示商标版权和数据源。
-        timeline: true, // 展示当前时间和允许用户在进度条上拖动到任何一个指定的时间。
+        timeline: true, // 是否显示时间轴控件，默认true；设置 false，时间轴控件不可见
         fullscreenButton: true, // 视察全屏按钮
         // 图像图层提供者，仅baseLayerPicker设为false有意义
         imageryProvider: new Cesium.TileMapServiceImageryProvider({
@@ -32,15 +35,15 @@ export default {
           url: this.mapUrl,
         }),
       })
-      this.viewer._cesiumWidget._creditContainer.style.display = 'none' // 隐藏版权
+      viewer._cesiumWidget._creditContainer.style.display = 'none' // 隐藏版权
       // 使用太阳作为光源，可以照亮地球。
-      this.viewer.scene.globe.enableLighting = false
+      viewer.scene.globe.enableLighting = false
       // 关闭地面大气效果，（默认为开启状态）
-      this.viewer.scene.globe.showGroundAtmosphere = false
+      viewer.scene.globe.showGroundAtmosphere = false
       // FPS 帧率显示
-      this.viewer.scene.debugShowFramesPerSecond = true
+      viewer.scene.debugShowFramesPerSecond = true
       // cesiumCanvas id 设置
-      this.viewer.scene.canvas.id = 'cesiumCanvas'
+      viewer.scene.canvas.id = 'cesiumCanvas'
       this.flytochina()
       // 指北针插件
       // this.initNavigation()
@@ -52,7 +55,7 @@ export default {
      *
      * */
     flytochina() {
-      this.viewer.camera.flyTo({
+      viewer.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(103.84, 31.15, 17850000),
         orientation: {
           heading: Cesium.Math.toRadians(348.4202942851978),
@@ -68,11 +71,11 @@ export default {
      * 切换地图
      */
     changeBaseMap(type) {
-      this.viewer.imageryLayers.removeAll()
+      viewer.imageryLayers.removeAll()
       switch (type) {
         //天地图
         case 'tdt':
-          this.viewer.imageryLayers.addImageryProvider(
+          viewer.imageryLayers.addImageryProvider(
             new WebMapTileServiceImageryProvider({
               url: 'https://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=93d1fdef41f93d2211deed6d22780c48',
               layer: 'tdtBasicLayer',
@@ -86,7 +89,7 @@ export default {
           break
         //天地图矢量
         case 'tdtsl':
-          this.viewer.imageryLayers.addImageryProvider(
+          viewer.imageryLayers.addImageryProvider(
             new WebMapTileServiceImageryProvider({
               url: 'https://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=93d1fdef41f93d2211deed6d22780c48',
               layer: 'tdtVecBasicLayer',
@@ -100,7 +103,7 @@ export default {
         //谷歌影像
         case 'gg':
           var url = 'https://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali'
-          this.viewer.imageryLayers.addImageryProvider(new UrlTemplateImageryProvider({ url: url }))
+          viewer.imageryLayers.addImageryProvider(new UrlTemplateImageryProvider({ url: url }))
           break
         case 'arcgis':
           viewer.imageryLayers.addImageryProvider(
@@ -112,7 +115,7 @@ export default {
           break
         //必应
         case 'bing':
-          this.viewer.imageryLayers.addImageryProvider(
+          viewer.imageryLayers.addImageryProvider(
             new BingMapsImageryProvider({
               url: 'https://dev.virtualearth.net',
               key: 'get-yours-at-https://www.bingmapsportal.com/',
@@ -121,7 +124,7 @@ export default {
           )
           break
         case 'dark':
-          this.viewer.imageryLayers.addImageryProvider(
+          viewer.imageryLayers.addImageryProvider(
             new createTileMapServiceImageryProvider({
               url: 'https://cesiumjs.org/blackmarble',
               credit: 'Black Marble imagery courtesy NASA Earth Observatory',
@@ -132,7 +135,7 @@ export default {
       }
 
       //全球影像中文注记服务
-      this.viewer.imageryLayers.addImageryProvider(
+      viewer.imageryLayers.addImageryProvider(
         new WebMapTileServiceImageryProvider({
           url: 'https://t0.tianditu.com/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=93d1fdef41f93d2211deed6d22780c48',
           layer: 'tdtAnnoLayer',
@@ -143,7 +146,7 @@ export default {
         })
       )
       //全球矢量中文标注服务
-      this.viewer.imageryLayers.addImageryProvider(
+      viewer.imageryLayers.addImageryProvider(
         new WebMapTileServiceImageryProvider({
           url: 'https://t0.tianditu.com/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=93d1fdef41f93d2211deed6d22780c48',
           layer: 'tdtAnnoLayer',
@@ -176,12 +179,13 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
+.map-box {
+  width: 100%;
+  height: 100%;
+}
 #cesiumContainer {
   width: 100%;
   height: 100%;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
 }
 </style>

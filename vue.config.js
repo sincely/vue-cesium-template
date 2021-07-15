@@ -33,6 +33,29 @@ module.exports = {
       },
     },
   },
+  css: {
+    /* uecli 3和vuecli2.x还有一个区别是
+    vuecli 3会默认开启一个css分离插件 ExtractTextPlugin
+    每一个模块的css文件都会分离出来，整整13个css文件，而我们的首页就请求了4个，花费了不少的资源请求时间
+    我们可以在vue.config.js中关闭它 */
+    // 是否使用css分离插件 ExtractTextPlugin
+    extract: false,
+    // 开启 CSS source maps?
+    sourceMap: false,
+
+    loaderOptions: {},
+    // 启用 CSS modules for all css / pre-processor files.
+    modules: false,
+    // css预设器配置项
+    loaderOptions: {
+      css: {
+        // 这里的选项会传递给 css-loader
+      },
+      postcss: {
+        // 这里的选项会传递给 postcss-loader
+      },
+    },
+  },
   /*  node_modules里的依赖默认是不会编译的, 会导致es6语法在ie中的语法报错,
   所以需要在vue.config.js中使用transpileDependencies属性配置node_modules中指定哪些文件夹或文件需要编译. */
   transpileDependencies: [

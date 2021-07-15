@@ -11,11 +11,16 @@ import 'element-ui/lib/theme-chalk/index.css' // element-ui组件样式
 
 import './icons' // icon
 
+import VModal from 'vue-js-modal' // 基于Vue实现的Modal窗口，单独组件，方便使用，还很美观
 import dataV from '@jiaminghi/data-view' // 科技风格边框
 import * as filters from './filters' // 全局过滤器
 
 import './global.less' // 全局样式
 Vue.use(dataV) // 将自动注册所有组件为全局组件
+Vue.use(VModal, {
+  dialog: true,
+  dynamic: true,
+})
 Vue.config.productionTip = false
 
 // 注册全局过滤器

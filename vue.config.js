@@ -97,7 +97,7 @@ module.exports = {
     // 在resolve中设置cesium别名，
     // 这样在引入的时候就可以根据别名找到Cesium的包
     resolve: {
-      extensions: ['.js', '.vue', '.json'],
+      extensions: ['.js', '.vue', '.json'], //自动解析确定的拓展名,使导入模块时不带拓展名
       alias: {
         vue$: 'vue/dist/vue.esm.js',
         '@': path.resolve('src'),

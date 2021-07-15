@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "cesium": "^1.69.0",
+    "compression-webpack-plugin": "^5.0.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "hammerjs": "^2.0.8",
@@ -46,6 +47,7 @@
     "node-sass": "^4.12.0",
     "prettier": "^2.2.1",
     "sass-loader": "^8.0.2",
+    "terser-webpack-plugin": "^4.2.3",
     "vue-template-compiler": "^2.6.11",
     "webpack-bundle-analyzer": "^4.4.2"
   }

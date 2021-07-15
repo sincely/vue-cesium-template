@@ -2,7 +2,9 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const TerserPlugin = require('terser-webpack-plugin') //打包配置自动忽略console.log等
 let cesiumSource = './node_modules/cesium/Source'
 let cesiumWorkers = '../Build/Cesium/Workers'
 
@@ -21,6 +23,14 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true,
+    },
+    proxy: {
+      '^/sso': {
+        target: 'http://baidu.com', // 重写路径
+        ws: true, //开启WebSocket
+        secure: false, // 如果是https接口，需要配置这个参数
+        changeOrigin: true,
+      },
     },
   },
   /*  node_modules里的依赖默认是不会编译的, 会导致es6语法在ie中的语法报错,
@@ -41,13 +51,17 @@ module.exports = {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
+    //关闭 webpack 的性能提示
+    performance: {
+      hints: false,
+    },
     output: {
       sourcePrefix: ' ',
     },
     amd: {
       toUrlUndefined: true,
     },
-
+    // 插件配置
     plugins: [
       new CopyWebpackPlugin([{ from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' }]),
       new CopyWebpackPlugin([{ from: path.join(cesiumSource, 'Assets'), to: 'Assets' }]),
@@ -59,6 +73,7 @@ module.exports = {
         CESIUM_BASE_URL: JSON.stringify('./'),
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // 忽略/moment/locale下的所有文件
+      // 打包分析
       new BundleAnalyzerPlugin({
         //  可以是`server`，`static`或`disabled`。
         //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
@@ -88,6 +103,33 @@ module.exports = {
         //  在这里查看更多选项：https：  //github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
         statsOptions: null,
         logLevel: 'info', //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
+      }),
+      // gzip
+      new CompressionWebpackPlugin({
+        filename: '[path].gz[query]',
+        algorithm: 'gzip',
+        // test: /\.js$|\.html$|\.json$|\.css/,
+        test: /\.js$|\.json$|\.css/,
+        threshold: 10240, // 只有大小大于该值的资源会被处理
+        minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
+        // deleteOriginalAssets: true // 删除原文件
+      }),
+      //在new TerserPlugin增加多进程打包速度快点
+      new TerserPlugin({
+        cache: true, // 降低版本号后增加
+        sourceMap: false, //降低版本号后增加
+        // 多进程
+        parallel: true, // 降低版本号后增加
+        terserOptions: {
+          ecma: undefined,
+          warnings: false,
+          parse: {},
+          compress: {
+            drop_console: true,
+            drop_debugger: false,
+            pure_funcs: ['console.log'], // 移除console
+          },
+        },
       }),
     ],
     module: {

@@ -44,19 +44,11 @@ module.exports = {
     extract: false,
     // 开启 CSS source maps?
     sourceMap: false,
-
     loaderOptions: {},
     // 启用 CSS modules for all css / pre-processor files.
-    modules: false,
+    requireModuleExtension: false,
     // css预设器配置项
-    loaderOptions: {
-      css: {
-        // 这里的选项会传递给 css-loader
-      },
-      postcss: {
-        // 这里的选项会传递给 postcss-loader
-      },
-    },
+    loaderOptions: {},
   },
   /*  node_modules里的依赖默认是不会编译的, 会导致es6语法在ie中的语法报错,
   所以需要在vue.config.js中使用transpileDependencies属性配置node_modules中指定哪些文件夹或文件需要编译. */

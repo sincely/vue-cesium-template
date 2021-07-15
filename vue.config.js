@@ -3,6 +3,8 @@ const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const TerserPlugin = require('terser-webpack-plugin') //打包配置自动忽略console.log等
 let cesiumSource = './node_modules/cesium/Source'
@@ -154,6 +156,8 @@ module.exports = {
           },
         },
       }),
+      // 开启打包进度
+      new SimpleProgressWebpackPlugin(),
     ],
     module: {
       unknownContextCritical: /^.\/.*$/,

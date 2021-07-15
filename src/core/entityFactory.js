@@ -71,10 +71,7 @@ export default class entityFactory {
         return text_temp
       }
     }
-    this.options.polyline.positions = new Cesium.CallbackProperty(
-      _update,
-      false
-    )
+    this.options.polyline.positions = new Cesium.CallbackProperty(_update, false)
     this.options.position = new Cesium.CallbackProperty(_update_label, false)
     this.options.label.text = new Cesium.CallbackProperty(_text, false)
   }
@@ -88,8 +85,7 @@ export default class entityFactory {
       polyline: {
         show: true,
         positions: [],
-        material:
-          opt.material == undefined ? Cesium.Color.CHARTREUSE : opt.material,
+        material: opt.material == undefined ? Cesium.Color.CHARTREUSE : opt.material,
         width: opt.width == undefined ? 5 : opt.width,
         clampToGround: opt.clampToGround == undefined ? false : true, //贴地
       },
@@ -100,10 +96,7 @@ export default class entityFactory {
     var _update = function () {
       return _self.positions
     }
-    this.options.polyline.positions = new Cesium.CallbackProperty(
-      _update,
-      false
-    )
+    this.options.polyline.positions = new Cesium.CallbackProperty(_update, false)
   }
   /**
    * 动态绑定柱体
@@ -130,9 +123,7 @@ export default class entityFactory {
     var _self = this
     var _update = function () {
       var positions = _self.entity.position.getValue(_self.v.clock.currentTime)
-      var cartographic = _self.v.scene.globe.ellipsoid.cartesianToCartographic(
-        positions
-      )
+      var cartographic = _self.v.scene.globe.ellipsoid.cartesianToCartographic(positions)
       var lat = Cesium.Math.toDegrees(cartographic.latitude),
         lng = Cesium.Math.toDegrees(cartographic.longitude),
         hei = parseFloat(cartographic.height / 4)
@@ -140,9 +131,7 @@ export default class entityFactory {
     }
     var _length = function () {
       var positions = _self.entity.position.getValue(_self.v.clock.currentTime)
-      var cartographic = _self.v.scene.globe.ellipsoid.cartesianToCartographic(
-        positions
-      )
+      var cartographic = _self.v.scene.globe.ellipsoid.cartesianToCartographic(positions)
       return cartographic.height * 2
     }
     this.options.position = new Cesium.CallbackProperty(_update, false)
@@ -160,10 +149,7 @@ export default class entityFactory {
         polygon: {
           hierarchy: [],
           // perPositionHeight : true,
-          material:
-            obj.material == undefined
-              ? Cesium.Color.CHARTREUSE.withAlpha(0.3)
-              : obj.material, //Cesium.Color.CHARTREUSE.withAlpha(0.5)
+          material: obj.material == undefined ? Cesium.Color.CHARTREUSE.withAlpha(0.3) : obj.material, //Cesium.Color.CHARTREUSE.withAlpha(0.5)
           // heightReference:20000
         },
       }
@@ -173,10 +159,7 @@ export default class entityFactory {
         return _self.hierarchy
       }
       //实时更新polygon.hierarchy
-      this.options.polygon.hierarchy = new Cesium.CallbackProperty(
-        _update,
-        false
-      )
+      this.options.polygon.hierarchy = new Cesium.CallbackProperty(_update, false)
     } catch (error) {
       console.log(error)
     }
@@ -202,8 +185,7 @@ export default class entityFactory {
       topRadius: 0.0,
       bottomRadius: length * 0.5,
       //vertexFormat : Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
-      vertexFormat:
-        Cesium.MaterialAppearance.MaterialSupport.TEXTURED.vertexFormat,
+      vertexFormat: Cesium.MaterialAppearance.MaterialSupport.TEXTURED.vertexFormat,
     })
     var redCone = new Cesium.GeometryInstance({
       // 4.2 创建GeometryInstance

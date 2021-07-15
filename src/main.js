@@ -3,11 +3,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axiosOrigin from 'axios'
+
 import './plugins/ant-design-vue' // 按需引入ant-design-vue组件
 import 'ant-design-vue/dist/antd.css' //ant-design-vue组件样式
 import './plugins/element-ui' // 按需引入element-ui组件
 import 'element-ui/lib/theme-chalk/index.css' // element-ui组件样式
+
 import './icons' // icon
+
 import dataV from '@jiaminghi/data-view' // 科技风格边框
 import * as filters from './filters' // 全局过滤器
 

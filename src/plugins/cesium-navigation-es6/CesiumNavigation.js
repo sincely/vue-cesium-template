@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { defined, Event, knockout, DeveloperError } from 'cesium'
+import { defined, Event, knockout, DeveloperError } from 'cesium/Cesium.js'
 import registerKnockoutBindings from './core/registerKnockoutBindings'
 import DistanceLegendViewModel from './viewModels/DistanceLegendViewModel'
 import NavigationViewModel from './viewModels/NavigationViewModel'

@@ -11,7 +11,7 @@ import {
   BoundingSphere,
   HeadingPitchRange,
   knockout,
-} from 'cesium'
+} from 'cesium/Cesium.js'
 import loadView from '../core/loadView'
 import ResetViewNavigationControl from './ResetViewNavigationControl'
 import ZoomNavigationControl from './ZoomNavigationControl'

@@ -3,22 +3,19 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axiosOrigin from 'axios'
-
 import './core/ant-design-vue' // 按需引入ant-design-vue组件
 import 'ant-design-vue/dist/antd.css' //ant-design-vue组件样式
 import './core/element-ui' // 按需引入element-ui组件
 import 'element-ui/lib/theme-chalk/index.css' // element-ui组件样式
-
-import 'cesium/Widgets/widgets.css'
-
+import './icons' // icon
 import dataV from '@jiaminghi/data-view' // 科技风格边框
-import './global.less' // 全局样式
-
 import * as filters from './filters' // 全局过滤器
 
+import './global.less' // 全局样式
 Vue.use(dataV) // 将自动注册所有组件为全局组件
 Vue.config.productionTip = false
-
+/* Vue.prototype.Cesium = Cesium
+Vue.prototype.widgets = widgets */
 // 注册全局过滤器
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key])

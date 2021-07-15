@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { knockout, getElement } from 'cesium'
+import { knockout, getElement } from 'cesium/Cesium.js'
 import createFragmentFromTemplate from './createFragmentFromTemplate'
 var Knockout = knockout
 

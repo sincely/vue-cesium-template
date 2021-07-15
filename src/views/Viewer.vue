@@ -4,7 +4,10 @@
   </div>
 </template>
 <script>
-// 指北针插件
+import CesiumNavigation from '../plugins/cesium-navigation-es6' // 指南针插件
+import * as Cesium from 'cesium/Cesium'
+import * as widgets from 'cesium/Widgets/widgets.css'
+
 let viewer
 export default {
   name: '',
@@ -46,7 +49,7 @@ export default {
       viewer.scene.canvas.id = 'cesiumCanvas'
       this.flytochina()
       // 指北针插件
-      // this.initNavigation()
+      this.initNavigation()
       // 初始地图高清
       // this.changeBaseMap('gg')
     },
@@ -169,7 +172,7 @@ export default {
       options.enableDistanceLegend = true
       // 用于启用或禁用指南针外环。true是启用，false是禁用。默认值为true。如果将选项设置为false，则该环将可见但无效。
       options.enableCompassOuterRing = true
-      CesiumNavigation(this.viewer, options)
+      CesiumNavigation(viewer, options)
     },
   },
 
@@ -185,6 +188,7 @@ export default {
   height: 100%;
 }
 #cesiumContainer {
+  position: absolute;
   width: 100%;
   height: 100%;
 }

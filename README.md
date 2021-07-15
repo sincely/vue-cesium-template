@@ -28,8 +28,9 @@ npm run lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-"mapUrl": "http://127.0.0.1:8092",
-"websocketUrl": "ws://192.168.31.218:8095",
-"baseUrl": "http://192.168.31.101:8081"
-
 #https://juejin.cn/post/6844904152548507662
+/\*\*
+
+- 参考：https://www.cnblogs.com/shoufengwei/p/7998468.html
+-      https://github.com/AJJackGIS/Cesium/blob/master/doc/Cesium%E4%B8%AD%E7%9A%84%E5%87%A0%E7%A7%8D%E5%9D%90%E6%A0%87%E5%92%8C%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2.md
+  \*/
